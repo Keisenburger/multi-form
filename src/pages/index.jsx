@@ -1,7 +1,11 @@
 import { Form } from "@/components/Forms";
-import { Input } from "@/components/Inputs";
+import {
+  firstNameValidation,
+  lastNameValidation,
+  userNameValidation,
+} from "@/functions/validate";
 import { useState } from "react";
-
+const userNames = ["garig", "hasaa"];
 const MultiForm = () => {
   const [userData, setUserData] = useState({
     firstName: "",
@@ -10,16 +14,75 @@ const MultiForm = () => {
     email: "",
     phoneNumber: "",
     password: "",
+    confirmingPassword: "",
     dateOfBirth: "",
-    image: "",
+    profileImage: "",
   });
+  const [errorMsg, setErrorMsg] = useState({
+    firstName: "passed",
+    lastName: "passed",
+    userName: "passed",
+    email: "passed",
+    phoneNumber: "passed",
+    password: "passed",
+    confirmingPassword: "passed",
+    dateOfBirth: "passed",
+    profileImage: "passed",
+  });
+  const [inputs, setInputs] = useState({
+    firstName: "",
+    lastName: "",
+    userName: "",
+    email: "",
+    phoneNumber: "",
+    password: "",
+    confirmingPassword: "",
+    dateOfBirth: "",
+    profileImage: "",
+  });
+
   const [pageNumber, setPageNumber] = useState(1);
   const handleContinueButton = () => {
+    if (firstNameValidation(inputs.firstName) !== "passed") {
+      setErrorMsg({
+        ...errorMsg,
+        firstName: firstNameValidation(inputs.firstName),
+      });
+      return 0;
+    }
+    if (lastNameValidation(inputs.lastName) !== "passed") {
+      setErrorMsg({
+        ...errorMsg,
+        lastName: lastNameValidation(inputs.lastName),
+      });
+      return 0;
+    }
+    if (userNameValidation(userNames, inputs.userName) !== "passed") {
+      setErrorMsg({
+        ...errorMsg,
+        userName: userNameValidation(userNames, inputs.userName),
+      });
+      return 0;
+    }
+
+    setUserData(inputs);
     if (pageNumber <= 2) {
       setPageNumber(pageNumber + 1);
     }
   };
+
   const handleBackButton = () => {
+    setErrorMsg({
+      firstName: "passed",
+      lastName: "passed",
+      userName: "passed",
+      email: "passed",
+      phoneNumber: "passed",
+      password: "passed",
+      confirmingPassword: "passed",
+      dateOfBirth: "passed",
+      profileImage: "passed",
+    });
     if (pageNumber >= 0) {
       setPageNumber(pageNumber - 1);
     }
@@ -37,7 +100,12 @@ const MultiForm = () => {
               Please provide all current information accurately.
             </p>
           </div>
-          <Form pageNumber={pageNumber} />
+          <Form
+            pageNumber={pageNumber}
+            inputs={inputs}
+            setInputs={setInputs}
+            errorMsg={errorMsg}
+          />
         </div>
         <div className="flex gap-2 ">
           {pageNumber !== 1 ? (
@@ -56,7 +124,7 @@ const MultiForm = () => {
             onClick={() => handleContinueButton()}
           >
             <p className="text-white text-center text-[16px] leading-6 cursor-pointer">
-              Continue {pageNumber}/3{" "}
+              {pageNumber !== 3 ? "Continue" : "Submit"} {pageNumber}/3{" "}
             </p>
           </button>
         </div>
