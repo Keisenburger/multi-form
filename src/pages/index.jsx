@@ -3,9 +3,14 @@ import {
   firstNameValidation,
   lastNameValidation,
   userNameValidation,
+  emailValidation,
+  phoneNumberValidation,
+  passwordValidation,
+  passwordConfirmValidation,
 } from "@/functions/validate";
 import { useState } from "react";
 const userNames = ["garig", "hasaa"];
+
 const MultiForm = () => {
   const [userData, setUserData] = useState({
     firstName: "",
@@ -18,6 +23,7 @@ const MultiForm = () => {
     dateOfBirth: "",
     profileImage: "",
   });
+
   const [errorMsg, setErrorMsg] = useState({
     firstName: "passed",
     lastName: "passed",
@@ -29,6 +35,7 @@ const MultiForm = () => {
     dateOfBirth: "passed",
     profileImage: "passed",
   });
+
   const [inputs, setInputs] = useState({
     firstName: "",
     lastName: "",
@@ -43,26 +50,71 @@ const MultiForm = () => {
 
   const [pageNumber, setPageNumber] = useState(1);
   const handleContinueButton = () => {
-    if (firstNameValidation(inputs.firstName) !== "passed") {
-      setErrorMsg({
-        ...errorMsg,
-        firstName: firstNameValidation(inputs.firstName),
-      });
-      return 0;
-    }
-    if (lastNameValidation(inputs.lastName) !== "passed") {
-      setErrorMsg({
-        ...errorMsg,
-        lastName: lastNameValidation(inputs.lastName),
-      });
-      return 0;
-    }
-    if (userNameValidation(userNames, inputs.userName) !== "passed") {
-      setErrorMsg({
-        ...errorMsg,
-        userName: userNameValidation(userNames, inputs.userName),
-      });
-      return 0;
+    switch (pageNumber) {
+      case 1:
+        if (firstNameValidation(inputs.firstName) !== "passed") {
+          setErrorMsg({
+            ...errorMsg,
+            firstName: firstNameValidation(inputs.firstName),
+          });
+          return 0;
+        }
+        if (lastNameValidation(inputs.lastName) !== "passed") {
+          setErrorMsg({
+            ...errorMsg,
+            lastName: lastNameValidation(inputs.lastName),
+          });
+          return 0;
+        }
+        if (userNameValidation(userNames, inputs.userName) !== "passed") {
+          setErrorMsg({
+            ...errorMsg,
+            userName: userNameValidation(userNames, inputs.userName),
+          });
+          return 0;
+        }
+
+        break;
+
+      case 2:
+        if (emailValidation(inputs.email) !== "passed") {
+          setErrorMsg({
+            ...errorMsg,
+            email: emailValidation(inputs.email),
+          });
+          return 0;
+        }
+        if (phoneNumberValidation(inputs.phoneNumber) !== "passed") {
+          setErrorMsg({
+            ...errorMsg,
+            phoneNumber: phoneNumberValidation(inputs.phoneNumber),
+          });
+          return 0;
+        }
+        if (passwordValidation(inputs.password) !== "passed") {
+          setErrorMsg({
+            ...errorMsg,
+            password: passwordValidation(inputs.password),
+          });
+          return 0;
+        }
+        if (
+          passwordConfirmValidation(
+            inputs.confirmingPassword,
+            inputs.password
+          ) !== "passed"
+        ) {
+          setErrorMsg({
+            ...errorMsg,
+            confirmingPassword: passwordConfirmValidation(
+              inputs.confirmingPassword,
+              inputs.password
+            ),
+          });
+          return 0;
+        }
+      default:
+        break;
     }
 
     setUserData(inputs);
@@ -89,7 +141,7 @@ const MultiForm = () => {
   };
   return (
     <div className="flex justify-center w-screen h-screen bg-[#F4F4F4] items-center">
-      <div className="w-[480px] h-[655px] bg-white p-8 flex flex-col justify-between rounded-lg">
+      <div className="w-[480px] min-h-[655px] h-fit bg-white p-8 flex flex-col justify-between rounded-lg">
         <div className="flex flex-col gap-7">
           <div className="flex flex-col gap-2">
             <img src="logo.png" alt="logo" className="size-15" />
@@ -107,7 +159,7 @@ const MultiForm = () => {
             errorMsg={errorMsg}
           />
         </div>
-        <div className="flex gap-2 ">
+        <div className="flex gap-2 mt-[54px]">
           {pageNumber !== 1 ? (
             <button
               className="w-[128px] px-3 py-2.5 border border-[#CBD5E1] rounded-lg cursor-pointer"

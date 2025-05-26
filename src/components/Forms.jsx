@@ -11,8 +11,6 @@ import {
 } from "./Inputs";
 
 const Form1 = ({ inputs, setInputs, errorMsg }) => {
-  console.log(errorMsg);
-
   return (
     <div className="flex flex-col gap-3">
       <FirstNameInput
@@ -51,7 +49,7 @@ const Form1 = ({ inputs, setInputs, errorMsg }) => {
   );
 };
 
-const Form2 = ({ inputs, setInputs }) => {
+const Form2 = ({ inputs, setInputs, errorMsg }) => {
   return (
     <div className="flex flex-col gap-3">
       <EmailInput
@@ -59,25 +57,42 @@ const Form2 = ({ inputs, setInputs }) => {
         type={"text"}
         inputs={inputs}
         setInputs={setInputs}
+        errorMsg={errorMsg.email}
       />
+      <p className="text-[#E14942]">
+        {errorMsg.email !== "passed" && errorMsg.email}
+      </p>
       <PhoneNumberInput
         typography={"Phone number"}
         type={"number"}
         inputs={inputs}
         setInputs={setInputs}
+        errorMsg={errorMsg.phoneNumber}
       />
+      <p className="text-[#E14942]">
+        {errorMsg.phoneNumber !== "passed" && errorMsg.phoneNumber}
+      </p>
       <PasswordInput
         typography={"Password"}
         type={"password"}
         inputs={inputs}
         setInputs={setInputs}
+        errorMsg={errorMsg.password}
       />
+      <p className="text-[#E14942]">
+        {errorMsg.password !== "passed" && errorMsg.password}
+      </p>
       <ConfirmingPasswordInput
         typography={"Confirm password"}
         type={"password"}
         inputs={inputs}
         setInputs={setInputs}
+        errorMsg={errorMsg.confirmingPassword}
       />
+      <p className="text-[#E14942]">
+        {errorMsg.confirmingPassword !== "passed" &&
+          errorMsg.confirmingPassword}
+      </p>
     </div>
   );
 };
@@ -107,7 +122,9 @@ export const Form = ({ pageNumber, inputs, setInputs, errorMsg }) => {
         <Form1 inputs={inputs} setInputs={setInputs} errorMsg={errorMsg} />
       );
     case 2:
-      return <Form2 inputs={inputs} setInputs={setInputs} />;
+      return (
+        <Form2 inputs={inputs} setInputs={setInputs} errorMsg={errorMsg} />
+      );
     case 3:
       return <Form3 inputs={inputs} setInputs={setInputs} />;
   }
