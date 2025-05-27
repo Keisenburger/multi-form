@@ -69,8 +69,6 @@ export const phoneNumberValidation = (phoneNumber) => {
 };
 
 export const passwordValidation = (password) => {
-  console.log(password);
-
   if (password === "") {
     return "Password cannot be empty.";
   }
@@ -98,14 +96,29 @@ export const passwordValidation = (password) => {
   return "passed";
 };
 
-export const passwordConfirmValidation = ({ password, confirmingPassword }) => {
-  console.log(password, confirmingPassword);
-
+export const passwordConfirmValidation = (password, confirmingPassword) => {
   if (confirmingPassword === "") {
     return "Confirming password cannot be empty.";
   }
   if (password !== confirmingPassword) {
     return "Passwords do not match. Please try again.";
   }
-  return "";
+  return "passed";
+};
+
+export const dateValidation = (date) => {
+  if (!date) {
+    return "Enter your date of birth";
+  }
+  const minAgeDate = new Date();
+  const userDate = new Date(date);
+
+  minAgeDate.setFullYear(minAgeDate.getFullYear() - 18);
+  console.log(userDate, "shine date", minAgeDate);
+  console.log(userDate > minAgeDate);
+
+  if (userDate > minAgeDate) {
+    return "You must be over 18";
+  }
+  return "passed";
 };

@@ -143,7 +143,13 @@ export const PhoneNumberInput = ({
   );
 };
 
-export const PasswordInput = ({ typography, type, inputs, setInputs }) => {
+export const PasswordInput = ({
+  typography,
+  type,
+  inputs,
+  setInputs,
+  errorMsg,
+}) => {
   return (
     <div className="flex flex-col gap-2">
       <div className="flex gap-1 leading-[16px] font-semibold">
@@ -153,7 +159,11 @@ export const PasswordInput = ({ typography, type, inputs, setInputs }) => {
 
       <input
         type={type}
-        className="p-3 rounded-[8px] text-[#8B8E95] border border-[#CBD5E1] focus:outline-[#0CA5E9]"
+        className={`${
+          errorMsg === "passed"
+            ? "border-[#CBD5E1]"
+            : "border-[#E14942] focus:outline-[#E14942] text-[#E14942]"
+        } p-3 rounded-[8px] text-[#8B8E95] border border-[#CBD5E1] focus:outline-[#0CA5E9]`}
         placeholder="Placeholder"
         value={inputs.password}
         onChange={(e) => setInputs({ ...inputs, password: e.target.value })}
@@ -167,6 +177,7 @@ export const ConfirmingPasswordInput = ({
   type,
   inputs,
   setInputs,
+  errorMsg,
 }) => {
   return (
     <div className="flex flex-col gap-2">
@@ -177,7 +188,11 @@ export const ConfirmingPasswordInput = ({
 
       <input
         type={type}
-        className="p-3 rounded-[8px] text-[#8B8E95] border border-[#CBD5E1] focus:outline-[#0CA5E9]"
+        className={`${
+          errorMsg === "passed"
+            ? "border-[#CBD5E1]"
+            : "border-[#E14942] focus:outline-[#E14942] text-[#E14942]"
+        } p-3 rounded-[8px] text-[#8B8E95] border border-[#CBD5E1] focus:outline-[#0CA5E9]`}
         placeholder="Placeholder"
         value={inputs.confirmingPassword}
         onChange={(e) =>
@@ -188,7 +203,13 @@ export const ConfirmingPasswordInput = ({
   );
 };
 
-export const DateOfBirthInput = ({ typography, type, inputs, setInputs }) => {
+export const DateOfBirthInput = ({
+  typography,
+  type,
+  inputs,
+  setInputs,
+  errorMsg,
+}) => {
   return (
     <div className="flex flex-col gap-2">
       <div className="flex gap-1 leading-[16px] font-semibold">
@@ -198,7 +219,11 @@ export const DateOfBirthInput = ({ typography, type, inputs, setInputs }) => {
 
       <input
         type={type}
-        className="p-3 rounded-[8px] text-[#8B8E95] border border-[#CBD5E1] focus:outline-[#0CA5E9]"
+        className={`${
+          errorMsg === "passed"
+            ? "border-[#CBD5E1]"
+            : "border-[#E14942] focus:outline-[#E14942] text-[#E14942]"
+        } p-3 rounded-[8px] text-[#8B8E95] border border-[#CBD5E1] focus:outline-[#0CA5E9]`}
         placeholder="Placeholder"
         value={inputs.dateOfBirth}
         onChange={(e) => setInputs({ ...inputs, dateOfBirth: e.target.value })}
@@ -207,7 +232,7 @@ export const DateOfBirthInput = ({ typography, type, inputs, setInputs }) => {
   );
 };
 
-export const ImageInput = ({ typography, type }) => {
+export const ImageInput = ({ typography, type, errorMsg }) => {
   return (
     <div className="flex flex-col gap-2">
       <div className="flex gap-1 leading-[16px] font-semibold">

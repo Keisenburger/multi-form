@@ -96,7 +96,7 @@ const Form2 = ({ inputs, setInputs, errorMsg }) => {
     </div>
   );
 };
-const Form3 = ({ inputs, setInputs }) => {
+const Form3 = ({ inputs, setInputs, errorMsg }) => {
   return (
     <div className="flex flex-col gap-3">
       <DateOfBirthInput
@@ -104,7 +104,11 @@ const Form3 = ({ inputs, setInputs }) => {
         type={"date"}
         inputs={inputs}
         setInputs={setInputs}
+        errorMsg={errorMsg.dateOfBirth}
       />
+      <p className="text-[#E14942]">
+        {errorMsg.dateOfBirth !== "passed" && errorMsg.dateOfBirth}
+      </p>
       <ImageInput
         typography={"Profile image"}
         type={"file"}
@@ -114,7 +118,18 @@ const Form3 = ({ inputs, setInputs }) => {
     </div>
   );
 };
-
+const AllSetPage = () => {
+  return (
+    <div className="flex flex-col gap-2">
+      <p className=" text-[26px] font-semibold text-[#202124]">
+        You're All Set 🔥
+      </p>
+      <p className=" text-[#8E8E8E] text-[18px]">
+        We have received your submission. Thank you!
+      </p>
+    </div>
+  );
+};
 export const Form = ({ pageNumber, inputs, setInputs, errorMsg }) => {
   switch (pageNumber) {
     case 1:
@@ -126,6 +141,10 @@ export const Form = ({ pageNumber, inputs, setInputs, errorMsg }) => {
         <Form2 inputs={inputs} setInputs={setInputs} errorMsg={errorMsg} />
       );
     case 3:
-      return <Form3 inputs={inputs} setInputs={setInputs} />;
+      return (
+        <Form3 inputs={inputs} setInputs={setInputs} errorMsg={errorMsg} />
+      );
+    case 4:
+      return <AllSetPage />;
   }
 };
